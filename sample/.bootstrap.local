@@ -77,7 +77,7 @@ defaults write NSGlobalDomain KeyRepeat -int 0
 defaults write com.apple.screensaver askForPassword -int 1
 defaults write com.apple.screensaver askForPasswordDelay -int 0
 
-WORKSPACE="Workspace"
+WORKSPACE="$HOME/Workspace"
 echo "Creating folder structure..."
 [[ ! -d $WORKSPACE ]] && mkdir $WORKSPACE
 
