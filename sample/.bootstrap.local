@@ -1,0 +1,84 @@
+echo "Cleaning up..."
+brew cleanup
+
+NODE_VERSION="6.10.0"
+
+echo "Installing node version $NODE_VERSION"
+if [[ -z $(grep "NVM_DIR" ~/.bash_profile) ]]; then
+  mkdir ~/.nvm
+  cat >> ~/.bash_profile <<EOL
+export NVM_DIR="\$HOME/.nvm"
+source \$(brew --prefix nvm)/nvm.sh
+EOL
+fi
+source $(brew --prefix nvm)/nvm.sh
+nvm install $NODE_VERSION
+nvm alias default $NODE_VERSION
+
+echo "Installing VS Code Extensions..."
+
+VSCODE_EXTENSIONS=(
+	DavidAnson.vscode-markdownlint
+	DotJoshJohnson.xml
+	EditorConfig.EditorConfig
+	Equinusocio.vsc-material-theme
+	anseki.vscode-color
+	christian-kohler.npm-intellisense
+	christian-kohler.path-intellisense
+	codezombiech.gitignore
+	dbaeumer.jshint
+	eg2.vscode-npm-script
+	mohsen1.prettify-json
+	robertohuertasm.vscode-icons
+	zhuangtongfa.Material-theme
+)
+
+if hash code &>/dev/null; then
+	echo_ok "Installing VS Code extensions..."
+	for i in "${VSCODE_EXTENSIONS[@]}"; do
+		code --install-extension "$i"
+	done
+fi
+
+echo "Configuring OSX..."
+
+# Set fast key repeat rate
+# The step values that correspond to the sliders on the GUI are as follow (lower equals faster):
+# KeyRepeat: 120, 90, 60, 30, 12, 6, 2
+# InitialKeyRepeat: 120, 94, 68, 35, 25, 15
+defaults write NSGlobalDomain KeyRepeat -int 6
+defaults write NSGlobalDomain InitialKeyRepeat -int 25
+
+# Always show scrollbars
+defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
+
+# Show filename extensions by default
+defaults write NSGlobalDomain AppleShowAllExtensions -bool true
+
+# Expanded Save menu
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Expanded Print menu
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint -bool true
+defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
+
+# Enable tap-to-click
+defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad Clicking -bool true
+defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
+
+# Disable "natural" scroll
+defaults write NSGlobalDomain com.apple.swipescrolldirection -bool false
+
+# Set fast key repeat rate
+defaults write NSGlobalDomain KeyRepeat -int 0
+
+# Require password as soon as screensaver or sleep mode starts
+defaults write com.apple.screensaver askForPassword -int 1
+defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+WORKSPACE="Workspace"
+echo "Creating folder structure..."
+[[ ! -d $WORKSPACE ]] && mkdir $WORKSPACE
+
+echo "Bootstrapping complete"
