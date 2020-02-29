@@ -196,6 +196,15 @@ run_bootstrap_local() {
   fi
 }
 
+install_or_update_gem() {
+  if gem list "$1" --installed > /dev/null; then
+    gem update "$@"
+  else
+    gem install "$@"
+  fi
+  rbenv rehash
+}
+
 main() {
   announce_editing_shell_runconfig
   ensure_homebrew_prefix_usable

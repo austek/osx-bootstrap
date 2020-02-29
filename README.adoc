@@ -1,3 +1,86 @@
 = osx-bootstrap
 
-Script to set up a Mac OS X for Scala and NodeJS development.
+Script to set up a Mac OS X
+
+It can be run multiple times on the same machine safely. +
+It installs, upgrades, or skips packages +
+based on what is already installed on the machine.
+== Requirements
+Shell::
+* http://zsh.sourceforge.net[z shell]
+* https://www.gnu.org/software/bash[bash]
+
+Operating System::
+* OS X Yosemite (10.10)
+* OS X El Capitan (10.11)
+* macOS Sierra (10.12)
+* masOS High Sierra (10.13)
+
+== What it sets up
+Mac OS X tools::
+* http://brew.sh/[Homebrew] for managing operating system libraries.
+Unix tools::
+* https://git-scm.com[Git] for version control
+* https://www.openssl.org[OpenSSL] for Transport Layer Security (TLS)
+
+== Install
+Clone, review, then execute the script:
+
+[source,bash]
+-----
+curl -s https://raw.githubusercontent.com/austek/osx-bootstrap/master/bootstrap | bash /dev/stdin
+-----
+
+To install with samples provided in the repo run
+
+[source,bash]
+-----
+curl -s https://raw.githubusercontent.com/austek/osx-bootstrap/master/bootstrap | bash /dev/stdin sample
+-----
+
+== Customise
+Customise in `bootstrap.local` and `~/.Brewfile`
+
+=== Local Brewfile
+
+A [Brewfile](https://github.com/Homebrew/homebrew-bundle) is like a Gemfile for non-ruby dependencies. Anything you would install via [homebrew](http://brew.sh/) you can drop into your `~/.Brewfile` and it will be installed during the bootstrap script.
+
+An example Brewfile looks like this:
+[source,ruby]
+-----
+# 3rd party Taps
+tap 'homebrew/bundle'
+tap 'caskroom/cask'
+
+# Homebrew Packages
+brew 'ack'
+brew 'keybase'
+brew 'tmux'
+
+# Cask macOS Apps
+cask 'java'
+
+# Mac store Apps
+mas '1Password', id: 443987910
+mas 'Xcode', id: 497799835
+-----
+
+=== bootstrap.local
+
+Your `bootstrap.local` is run at the end of the BNR Bootstrap script.
+Put your customizations there.
+An example local script could look like this:
+
+[source,bash]
+-----
+#!/bin/bash
+...
+echo "Add your changes here"
+...
+-----
+
+Write your customizations such that they can be run safely more than once.
+See the `bootstrap` script for examples.
+
+Script functions such as `fancy_echo` and `install_or_update_gem` can be used in your `~/.bootstrap.local`.
+

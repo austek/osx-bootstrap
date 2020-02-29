@@ -1,7 +1,9 @@
+#!/bin/bash
+
 echo "Cleaning up..."
 brew cleanup
 
-NODE_VERSION="6.10.0"
+NODE_VERSION="12"
 
 echo "Installing node version $NODE_VERSION"
 if [[ -z $(grep "NVM_DIR" ~/.bash_profile) ]]; then
