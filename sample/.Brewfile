@@ -9,7 +9,7 @@ brew 'gnutls'
 brew 'grep'
 
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-brew 'findutils' 
+brew 'findutils'
 
 # Install Bash 4
 brew 'bash'
@@ -26,7 +26,7 @@ brew 'curl'
 brew 'git-crypt'
 brew 'graphviz'
 brew 'mackup'
-brew 'mysql@5.7', restart_service: changed, link: true, conflicts_with: ['mysql']
+brew 'mysql@5.7', restart_service: true, link: true, conflicts_with: ['mysql']
 brew 'node'
 brew 'nvm'
 brew 'p7zip'
@@ -49,7 +49,7 @@ cask 'mysqlworkbench'
 cask 'slack'
 cask 'virtualbox'
 cask 'visual-studio-code'
-	
+
 # Installing apps with dependencies on cask apps
 brew 'sbt'
 brew 'scala'
